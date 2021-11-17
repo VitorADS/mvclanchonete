@@ -1,1 +1,6 @@
-<h1>Header</h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><?=$_SESSION['title']?></title>
+    </head>
+    <body>
