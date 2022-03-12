@@ -1,6 +1,7 @@
 <?php $render('header'); ?>
     <button><a href="<?=$base;?>/logout">Sair</a></button><br><br>
 
+    
     <table border="1px solid">
         <tr>
             <th>Cliente</th>
