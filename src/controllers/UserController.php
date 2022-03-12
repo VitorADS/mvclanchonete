@@ -9,12 +9,20 @@ class UserController extends Controller{
     private $loggedUser;
 
     public function __construct(){
+        $this->loggedUser = $this->checkLogin();
+
+        if(!$this->loggedUser){
+            $this->redirect('/');
+        }
+    }
+
+    public function checkLogin(){
         if($_SESSION['token'] != ''){
-            if($this->loggedUser = $this->findByToken($_SESSION['token'])){
-                return $this->loggedUser;
-            }else{
+            $user = $this->findByToken($_SESSION['token']);
+            if(!$user){
                 $_SESSION['token'] = '';
-                $this->redirect('/');
+            }else{
+                return $user;
             }
         }
     }
