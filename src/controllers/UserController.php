@@ -6,27 +6,6 @@ use src\models\User;
 
 class UserController extends Controller{
 
-    private $loggedUser;
-
-    public function __construct(){
-        $this->loggedUser = $this->checkLogin();
-
-        if(!$this->loggedUser){
-            $this->redirect('/');
-        }
-    }
-
-    public function checkLogin(){
-        if($_SESSION['token'] != ''){
-            $user = $this->findByToken($_SESSION['token']);
-            if(!$user){
-                $_SESSION['token'] = '';
-            }else{
-                return $user;
-            }
-        }
-    }
-
     public function generateUser($id, $name, $password, $token, $firstLogin, $admin){
             $user = new User();
             $user->id = $id;

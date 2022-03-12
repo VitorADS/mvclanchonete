@@ -7,6 +7,19 @@ use src\controllers\UserController as UserController;
 
 class AuthController extends Controller {
 
+    public static function checkLogin(){
+        if($_SESSION['token'] != ''){
+            $user = new UserController();
+            $user = $user->findByToken($_SESSION['token']);
+            if(!$user){
+                return false;
+            }else{
+                return $user;
+            }
+        }
+        $_SESSION['token'] = '';
+    }
+
     public function loginAction(){
         $user = filter_input(INPUT_POST, 'user');
         $password = filter_input(INPUT_POST, 'password');
