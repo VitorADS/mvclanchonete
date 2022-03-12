@@ -6,12 +6,24 @@ use src\models\User;
 
 class UserController extends Controller{
 
-    public function generateUser($id, $name, $password, $hash, $token, $firstLogin, $admin){
+    private $loggedUser;
+
+    public function __construct(){
+        if($_SESSION['token'] != ''){
+            if($this->loggedUser = $this->findByToken($_SESSION['token'])){
+                return $this->loggedUser;
+            }else{
+                $_SESSION['token'] = '';
+                $this->redirect('/');
+            }
+        }
+    }
+
+    public function generateUser($id, $name, $password, $token, $firstLogin, $admin){
             $user = new User();
             $user->id = $id;
             $user->name = $name;
             $user->password = $password;
-            $user->hash = $hash;
             $user->token = $token;
             $user->firstLogin = $firstLogin;
             $user->admin = $admin;
@@ -23,9 +35,8 @@ class UserController extends Controller{
         User::update()
             ->set('name', $user->name)
             ->set('password', $user->password)
-            ->set('hash', $user->hash)
             ->set('token', $user->token)
-            ->set('first_login', $user->firstLogin)
+            ->set('firstLogin', $user->firstLogin)
             ->set('admin', $user->admin)
             ->execute();
     }
@@ -34,13 +45,11 @@ class UserController extends Controller{
         $user = User::select()
             ->where('id', $user)
             ->execute();
-
+            
         if(count($user) > 0){
-            $user = $this->generateUser($user['id'], $user['name'], $user['password'], $user['hash'], $user['token'], $user['first_login'], $user['admin']);
-
+            $user = $this->generateUser($user[0]['id'], $user[0]['name'], $user[0]['password'], $user[0]['token'], $user[0]['firstLogin'], $user[0]['admin']);
             return $user;
         }else{
-            $_SESSION['flash'] = 'Usuario nao encontrado!';
             return false;
         }
     }
@@ -51,11 +60,10 @@ class UserController extends Controller{
             ->execute();
 
         if(count($user) > 0){
-            $user = $this->generateUser($user['id'], $user['name'], $user['password'], $user['hash'], $user['token'], $user['first_login'], $user['admin']);
+            $user = $this->generateUser($user[0]['id'], $user[0]['name'], $user[0]['password'], $user[0]['token'], $user[0]['firstLogin'], $user[0]['admin']);
 
             return $user;
         }else{
-            $_SESSION['flash'] = 'Usuario nao encontrado!';
             return false;
         }
     }

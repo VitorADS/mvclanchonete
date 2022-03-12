@@ -1,7 +1,7 @@
-<?php $render('header'); ?>
+<?php $_SESSION['title'] = 'Home'; $render('header'); ?>
 <h1>Login</h1><hr/>
 <?=$_SESSION['flash'];?>
-<form action="login" method="POST">
+<form action="<?=$base;?>/login" method="POST">
     <label>
         Usuario: <br/>
         <input type="text" name="user" /><br/><br/>

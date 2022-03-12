@@ -31,27 +31,23 @@ class AuthController extends Controller {
                 $user->token = md5(time().rand(0, 9999));
                 $auth->update($user);
                 $_SESSION['token'] = $user->token;
-                $this->redirect('/Pedidos');
-            }else{
-                $_SESSION['flash'] = 'Usuario ou senha Incorreta!';
+                $this->redirect('/pedidos');
             }
         }
+        $_SESSION['flash'] = 'Usuario e/ou senha incorretos!';
         $this->redirect('/');
     }
 
     public function registerAction($name, $password, $admin){
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $hash = md5(time().rand(0, 9999999));
         $token = md5(rand(0, 999999).time());
         
-        User::insert()
-            ->set('name', $name)
-            ->set('password', $password)
-            ->set('hash', $hash)
-            ->set('token', $token)
-            ->set('first_login', true)
-            ->set('admin', $admin)
-            ->execute();
+        User::insert([
+                'name' => $name,
+                'password' => $password,
+                'admin' => $admin,
+                'token' => $token
+            ])->execute();
         
         $_SESSION['token'] = $token;
         $this->redirect('/logado');
