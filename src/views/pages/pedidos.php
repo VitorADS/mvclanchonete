@@ -9,8 +9,6 @@
             <th>Data</th>
             <th>Total</th>
             <th>Criado Por</th>
-            <th>Editar</th>
-            <th>Excluir</th>
         </tr>
         <?php foreach($pedidos as $pedido): ?>
             <tr>
@@ -19,7 +17,9 @@
                 <td><?=$pedido->statusPedido; ?></td>
                 <td><?=$pedido->data; ?></td>
                 <td><?=$pedido->total; ?></td>
-                <td><?=$pedido->userPedido; ?></td>
+                <td><?=$pedido->user; ?></td>
+                <td><a href="<?=$base;?>/verPedido/<?=$pedido->numeroPedido;?>">Ver Pedido</a></td>
+                <td><a href="<?=$base;?>/excluirPedido/<?=$pedido->numeroPedido;?>">Excluir Pedido</a></td>
             </tr>
         <?php endforeach; ?>
     </table>

@@ -43,4 +43,12 @@ class PedidosController extends Controller {
             $this->render('pedidos');
         }
     }
+
+    public function verPedido($np){
+
+    }
+
+    public function excluirPedido($np){
+        
+    }
 }
