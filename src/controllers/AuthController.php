@@ -8,7 +8,7 @@ use src\controllers\UserController as UserController;
 class AuthController extends Controller {
 
     public static function checkLogin(){
-        if($_SESSION['token'] != ''){
+        if(!empty($_SESSION['token'])){
             $user = new UserController();
             $user = $user->findByToken($_SESSION['token']);
             if(!$user){
@@ -49,7 +49,7 @@ class AuthController extends Controller {
             ])->execute();
         
         $_SESSION['token'] = $token;
-        $this->redirect('/logado');
+        $this->redirect('/pedidos');
     }
 
     public function logout(){

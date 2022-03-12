@@ -1,4 +1,4 @@
-<?php $_SESSION['title'] = 'Home'; $render('header'); ?>
+<?php $render('header'); ?>
 <h1>Login</h1><hr/>
 <?=$_SESSION['flash'];?>
 <form action="<?=$base;?>/login" method="POST">

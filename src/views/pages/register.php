@@ -1,4 +1,4 @@
-<?php $_SESSION['title'] = 'Registro'; $render('header'); ?>
+<?php $render('header'); ?>
 
 
 

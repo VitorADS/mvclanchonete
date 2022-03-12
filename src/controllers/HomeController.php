@@ -11,7 +11,7 @@ class HomeController extends Controller {
         $this->loggedUser = AuthController::checkLogin();
 
         if($this->loggedUser){
-            $this->redirect('/logado');
+            $this->redirect('/pedidos');
         }
     }
 
