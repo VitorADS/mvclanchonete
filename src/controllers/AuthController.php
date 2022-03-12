@@ -7,20 +7,6 @@ use src\controllers\UserController as UserController;
 
 class AuthController extends Controller {
 
-    public function checkLogin(){
-        if($_SESSION['token'] != ''){
-            $user = new UserController();
-            $user = $user->findByToken($_SESSION['token']);
-
-            if(!$user){
-                $_SESSION['token'] = '';
-                $this->redirect('/');
-            }else{
-                $this->redirect('/logado');
-            }
-        }
-    }
-
     public function loginAction(){
         $user = filter_input(INPUT_POST, 'user');
         $password = filter_input(INPUT_POST, 'password');
