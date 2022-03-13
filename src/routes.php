@@ -19,3 +19,8 @@ $router->get('/painelAdm/editarUser/{id}', 'AdminController@editarUser');
 $router->get('/painelAdm/excluirUser/{id}', 'AdminController@excluirUser');
 
 $router->get('/painelAdm/comidas', 'ComidasController@getComidas');
+$router->get('/painelAdm/editarComida/{id}', 'ComidasController@editarComidas');
+$router->get('/painelAdm/comida/{id}', 'ComidasController@excluirComidas');
+$router->get('/painelAdm/adicionarComida', 'ComidasController@adicionarComida');
+$router->post('/painelAdm/comidaAction', 'ComidasController@adicionarComidaAction');
+$router->get('/painelAdm/excluirComida/{id}', 'ComidasController@excluirComida');

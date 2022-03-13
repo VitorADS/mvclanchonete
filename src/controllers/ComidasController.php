@@ -34,9 +34,32 @@ class ComidasController extends Controller{
             }
         }   
 
-        $this->render('comida', [
+        $this->render('comidas', [
             'comidas' => $array
         ]);
+    }
+
+    public function adicionarComida(){
+        $_SESSION['title'] = 'Painel Administrativo - Adicionar Comidas';
+        $this->render('adicionarComida');
+    }
+
+    public function adicionarComidaAction(){
+        $name = filter_input(INPUT_POST, 'name');
+        $price = filter_input(INPUT_POST, 'price');
+
+        if($name && $price){
+            Comidas::insert([
+                'name' => $name,
+                'price' => $price
+            ])->execute();
+        }
+        $this->redirect('/painelAdm/comidas');
+    }
+
+    public function excluirComida($id){
+        Comidas::delete()->where('id', $id)->execute();
+        $this->redirect('/painelAdm/comidas');
     }
 
 }
