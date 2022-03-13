@@ -57,6 +57,33 @@ class ComidasController extends Controller{
         $this->redirect('/painelAdm/comidas');
     }
 
+    public function editarComida($id){
+        $_SESSION['title'] = 'Painel Administrativo - Editar Comida';
+        $comida = Comidas::select()->where('id', $id)->execute();
+
+        if(count($comida) > 0){
+            $comida = $this->generateComida($comida[0]['id'], $comida[0]['name'], $comida[0]['price']);
+        }
+        $this->render('editarComida', [
+            'comida' => $comida
+        ]);
+    }
+
+    public function editarComidaAction(){
+        $id = filter_input(INPUT_POST, 'id');
+        $name = filter_input(INPUT_POST, 'name');
+        $price = filter_input(INPUT_POST, 'price');
+
+        if($name && $price){
+            Comidas::update()
+                    ->set('name', $name)
+                    ->set('price', $price)
+                    ->where('id', $id)
+                    ->execute();
+        }
+        $this->redirect('/painelAdm/comidas');
+    }
+
     public function excluirComida($id){
         Comidas::delete()->where('id', $id)->execute();
         $this->redirect('/painelAdm/comidas');
