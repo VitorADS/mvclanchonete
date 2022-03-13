@@ -13,3 +13,7 @@ $router->get('/pedidos', 'PedidosController@pedidos');
 $router->get('/verPedido/{np}', 'PedidosController@verPedido');
 $router->get('/excluirPedido/{np}', 'PedidosController@excluirPedido');
 
+$router->get('/painelAdm', 'AdminController@painelAdm');
+$router->get('/painelAdm/users', 'AdminController@getUsers');
+$router->get('/painelAdm/editarUser/{id}', 'AdminController@editarUser');
+$router->get('/painelAdm/excluirUser/{id}', 'AdminController@excluirUser');
