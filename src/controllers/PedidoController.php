@@ -2,10 +2,10 @@
 namespace src\controllers;
 
 use \core\Controller;
-use src\models\Pedidos;
+use src\models\Pedido;
 use src\controllers\AuthController;
 
-class PedidosController extends Controller {
+class PedidoController extends Controller {
     private $loggedUser;
 
     public function __construct(){
@@ -17,7 +17,7 @@ class PedidosController extends Controller {
     }
 
     public function generatePedido($id, $nomeCliente, $numeroPedido, $statusPedido, $data, $total, $user){
-        $pedido = new Pedidos();
+        $pedido = new Pedido();
         $pedido->id = $id;
         $pedido->nomeCliente = $nomeCliente;
         $pedido->numeroPedido = $numeroPedido;
@@ -30,8 +30,8 @@ class PedidosController extends Controller {
     }
 
     public function pedidos(){
-        $_SESSION['title'] = 'Pedidos';
-        $pedidos = Pedidos::select()->execute();
+        $_SESSION['title'] = 'Pedido';
+        $pedidos = Pedido::select()->execute();
         if(count($pedidos) > 0){
             $pedidos = $this->generatePedido($pedidos[0]['id'], $pedidos[0]['nomeCliente'], $pedidos[0]['numeroPedido'], 
                                             $pedidos[0]['statusPedido'], $pedidos[0]['data'], $pedidos[0]['total'], $pedidos[0]['user']);
@@ -45,7 +45,7 @@ class PedidosController extends Controller {
     }
 
     public function verPedido($np){
-        $pedido = Pedidos::select()
+        $pedido = Pedido::select()
                     ->where('numeroPedido', $np)
                     ->execute();
 
@@ -64,7 +64,7 @@ class PedidosController extends Controller {
     }
 
     public function excluirPedido($np){
-        $pedido = Pedidos::select()
+        $pedido = Pedido::select()
                     ->where('numeroPedido', $np)
                     ->execute();
 
@@ -72,7 +72,7 @@ class PedidosController extends Controller {
             $this->redirect('/pedidos');
             exit;
         }else{
-            Pedidos::delete()->where('numeroPedido', $np)->execute();
+            Pedido::delete()->where('numeroPedido', $np)->execute();
             $this->redirect('/pedidos');
         }
     }

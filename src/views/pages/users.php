@@ -1,5 +1,7 @@
 <?php $render('header'); ?>
 
+<button><a href="<?=$base;?>/painelAdm">Voltar</a></button>
+<hr>
 <table border="1px solid">
     <tr>
         <th>Codigo</th>

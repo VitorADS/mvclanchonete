@@ -2,6 +2,6 @@
 namespace src\models;
 use \core\Model;
 
-class Pedidos extends Model {
+class Pedido extends Model {
     
 }
