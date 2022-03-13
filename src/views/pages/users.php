@@ -1,6 +1,6 @@
 <?php $render('header'); ?>
 
-<table>
+<table border="1px solid">
     <tr>
         <th>Codigo</th>
         <th>Nome</th>

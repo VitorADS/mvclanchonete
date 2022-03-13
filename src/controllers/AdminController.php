@@ -26,6 +26,7 @@ class AdminController extends Controller{
     }
 
     public function getUsers(){
+        $_SESSION['title'] = 'Painel Administrativo - Usuarios';
         $array = [];
         
         $users = User::select()->execute();
@@ -33,7 +34,7 @@ class AdminController extends Controller{
         if(count($users) > 0){
             foreach($users as $user){
                 $dado = new UserController();
-                $dado = $dado->generateUser($user[0]['id'], $user[0]['name'], $user[0]['password'], $user[0]['token'], $user[0]['firstLogin'], $user[0]['admin']);
+                $dado = $dado->generateUser($user['id'], $user['name'], $user['password'], $user['token'], $user['firstLogin'], $user['admin']);
                 $array[] = $dado;
             }
         }
@@ -52,6 +53,7 @@ class AdminController extends Controller{
         }else{
             $dado = new UserController();
             $user = $dado->generateUser($user[0]['id'], $user[0]['name'], $user[0]['password'], $user[0]['token'], $user[0]['firstLogin'], $user[0]['admin']);
+            $_SESSION['title'] = 'Painel Administrativo - Editar '.$user->name;
 
             $this->render('user', [
                 'user' => $user
