@@ -2,12 +2,12 @@
 namespace src\controllers;
 
 use \core\Controller;
-use src\models\User;
+use src\models\Users;
 
-class UserController extends Controller{
+class UsersController extends Controller{
 
     public function generateUser($id, $name, $password, $token, $firstLogin, $admin){
-            $user = new User();
+            $user = new Users();
             $user->id = $id;
             $user->name = $name;
             $user->password = $password;
@@ -18,8 +18,8 @@ class UserController extends Controller{
             return $user;
     }
 
-    public function update(User $user){
-        User::update()
+    public function update(Users $user){
+        Users::update()
             ->set('name', $user->name)
             ->set('password', $user->password)
             ->set('token', $user->token)
@@ -29,7 +29,7 @@ class UserController extends Controller{
     }
 
     public function findById($user){
-        $user = User::select()
+        $user = Users::select()
             ->where('id', $user)
             ->execute();
             
@@ -42,7 +42,7 @@ class UserController extends Controller{
     }
 
     public function findByToken($token){
-        $user = User::select()
+        $user = Users::select()
             ->where('token', $token)
             ->execute();
 

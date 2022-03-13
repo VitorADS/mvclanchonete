@@ -2,14 +2,14 @@
 namespace src\controllers;
 
 use \core\Controller;
-use src\models\User;
-use src\controllers\UserController as UserController;
+use src\models\Users;
+use src\controllers\UsersController as UsersController;
 
 class AuthController extends Controller {
 
     public static function checkLogin(){
         if(!empty($_SESSION['token'])){
-            $user = new UserController();
+            $user = new UsersController();
             $user = $user->findByToken($_SESSION['token']);
             if(!$user){
                 return false;
@@ -24,7 +24,7 @@ class AuthController extends Controller {
         $user = filter_input(INPUT_POST, 'user');
         $password = filter_input(INPUT_POST, 'password');
         
-        $auth = new UserController();
+        $auth = new UsersController();
         if($user = $auth->findById($user)){
             if(password_verify($password, $user->password)){
                 $user->token = md5(time().rand(0, 9999));
@@ -41,7 +41,7 @@ class AuthController extends Controller {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $token = md5(rand(0, 999999).time());
         
-        User::insert([
+        Users::insert([
                 'name' => $name,
                 'password' => $password,
                 'admin' => $admin,
