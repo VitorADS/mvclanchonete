@@ -6,6 +6,7 @@
     <tr>
         <th>Nome</th>
         <th>Preco</th>
+        <th>Acoes</th>
     </tr>
     <?php foreach($comidas as $comida): ?>
         <tr>

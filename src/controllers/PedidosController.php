@@ -2,6 +2,7 @@
 namespace src\controllers;
 
 use \core\Controller;
+use DateTime;
 use src\models\Pedidos;
 use src\controllers\AuthController;
 
@@ -9,6 +10,7 @@ class PedidosController extends Controller {
     private $loggedUser;
 
     public function __construct(){
+        date_default_timezone_set('America/Sao_Paulo');
         $this->loggedUser = AuthController::checkLogin();
 
         if(!$this->loggedUser){
@@ -33,15 +35,55 @@ class PedidosController extends Controller {
         $_SESSION['title'] = 'Pedido';
         $pedidos = Pedidos::select()->execute();
         if(count($pedidos) > 0){
-            $pedidos = $this->generatePedido($pedidos[0]['id'], $pedidos[0]['nomeCliente'], $pedidos[0]['numeroPedido'], 
-                                            $pedidos[0]['statusPedido'], $pedidos[0]['data'], $pedidos[0]['total'], $pedidos[0]['user']);
+            $array = [];
+
+            foreach($pedidos as $pedido){
+                $pedido = $this->generatePedido($pedido['id'], $pedido['nomeCliente'], $pedido['numeroPedido'], 
+                                                $pedido['statusPedido'], $pedido['data'], $pedido['total'], $pedido['user']);
+                $array[] = $pedido;
+            }                                
 
             $this->render('pedidos', [
-                'pedidos' => $pedidos
+                'pedidos' => $array,
+                'user' => $this->loggedUser
             ]);
         }else{
-            $this->render('pedidos');
+            $this->render('pedidos', [
+                'user' => $this->loggedUser
+            ]);
         }
+    }
+
+    public function adicionarPedido(){
+        $_SESSION['title'] = 'adicionar Pedido';
+        $this->render('adicionarPedido');
+    }
+
+    public function adicionarPedidoAction(){
+        $name = filter_input(INPUT_POST, 'name');
+        $numeroPedido = rand(0, 9999);
+        
+        $sql = Pedidos::select()
+                        ->where('numeroPedido', $numeroPedido)
+                        ->execute();
+        
+        while(count($sql) > 0){
+            $numeroPedido = rand(0, 9999);
+            $sql = Pedidos::select()
+                            ->where('numeroPedido', $numeroPedido)
+                            ->execute();
+        }
+
+        $data = new DateTime();
+        $data = $data->format("Y-m-d H:i:s");
+
+        Pedidos::insert([
+            'nomeCliente' => $name,
+            'numeroPedido' => $numeroPedido,
+            'statusPedido' => 'novo',
+            'data' => $data,
+            'user' => $this->loggedUser->id
+        ])->execute();
     }
 
     public function verPedido($np){

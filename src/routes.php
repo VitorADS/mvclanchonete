@@ -10,6 +10,8 @@ $router->get('/logout', 'AuthController@logout');
 $router->post('/register', 'AuthController@registerAction');
 
 $router->get('/pedidos', 'PedidosController@pedidos');
+$router->get('/adicionarPedido', 'PedidosController@adicionarPedido');
+$router->post('/adicionarPedidoAction', 'PedidosController@adicionarPedidoAction');
 $router->get('/verPedido/{np}', 'PedidosController@verPedido');
 $router->get('/excluirPedido/{np}', 'PedidosController@excluirPedido');
 

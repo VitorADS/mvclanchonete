@@ -1,5 +1,5 @@
 <?php $render('header'); ?>
-<h1>Login</h1><hr/>
+<h1>Login  ||  Sistema de controle vendas</h1><hr/>
 <?=$_SESSION['flash'];?>
 <form action="<?=$base;?>/login" method="POST">
     <label>

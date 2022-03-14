@@ -1,8 +1,10 @@
 <?php $render('header'); ?>
-    <button><a href="<?=$base;?>/logout">Sair</a></button><br><br>
+    <button><a href="<?=$base;?>/logout">Sair</a></button><br>
+    <h3>Usuario logado: <?=$user->name;?></h3>
     <hr>
         <button><a href="<?=$base;?>/painelAdm">Painel Administrativo</a></button>
     <hr>
+    <button><a href="<?=$base;?>/adicionarPedido">Adicionar Pedido</a></button><br><br>
     <table border="1px solid">
         <tr>
             <th>Cliente</th>
@@ -11,6 +13,7 @@
             <th>Data</th>
             <th>Total</th>
             <th>Criado Por</th>
+            <th>Acoes</th>
         </tr>
         <?php foreach($pedidos as $pedido): ?>
             <tr>
