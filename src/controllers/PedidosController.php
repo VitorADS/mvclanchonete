@@ -106,23 +106,17 @@ class PedidosController extends Controller {
                     
         $_SESSION['title'] = 'Pedido de '.$pedido->nomeCliente;
 
-        $comidas = Comidas::select()->execute();
         $comidaC = new ComidasController();
         $comidas = $comidaC->getAll();
 
         $array = [];
-        $total = 0;
 
         if(count($data) > 0){
             foreach($data as $comida){
-                $comidaC = new ComidasController();
                 $item = $comidaC->getComida($comida['idComida']);
-                $comida = $comidaC->generateComida($item->id, $item->name, $item->price * $comida['quantidade']);
-                $comida->quantidade = $comida->price / $item->price;
-                $total += $comida->price;
-                $comida->total = $total;
-                $array[] = $comida;
-                $this->atualizaTotal($total, $np);
+                $item->quantidade = $comida['quantidade'];
+                $item->price = $item->quantidade * $item->price;
+                $array[] = $item;
             }
         }
 
@@ -139,11 +133,23 @@ class PedidosController extends Controller {
         $produto = filter_input(INPUT_POST, 'produto');
         $quantidade = filter_input(INPUT_POST, 'quantidade');
 
-        Pedidos_Comida::insert([
-            'idPedido' => $numeroPedido,
-            'idComida' => $produto,
-            'quantidade' => $quantidade
-        ])->execute();
+        if($produto && $quantidade > 0){
+            Pedidos_Comida::insert([
+                'idPedido' => $numeroPedido,
+                'idComida' => $produto,
+                'quantidade' => $quantidade
+            ])->execute();
+
+            $produto = Comidas::select()->where('id', $produto)->execute();
+            $comida = new ComidasController();
+            $produto = $comida->getComida($produto[0]['id']);
+            $pedido = Pedidos::select()->where('numeroPedido', $numeroPedido)->execute();
+            $pedido = $this->generatePedido($pedido[0]['id'], $pedido[0]['nomeCliente'], $pedido[0]['numeroPedido'], 
+                                    $pedido[0]['statusPedido'], $pedido[0]['data'], $pedido[0]['total'], $pedido[0]['user']);
+            
+            $pedido->total += $produto->price * $quantidade;
+            $this->atualizaTotal($pedido);      
+        }
 
         $this->redirect('/verPedido/'.$numeroPedido);
     }
@@ -159,10 +165,10 @@ class PedidosController extends Controller {
         $this->redirect('/pedidos');
     }
 
-    public function atualizaTotal($total, $np){
+    public function atualizaTotal(Pedidos $pedido){
         Pedidos::update()
-                ->set('total', $total)
-                ->where('numeroPedido', $np)
+                ->set('total', $pedido->total)
+                ->where('numeroPedido', $pedido->numeroPedido)
                 ->execute();
     }
 
@@ -176,7 +182,11 @@ class PedidosController extends Controller {
             exit;
         }else{
             Pedidos::delete()->where('numeroPedido', $np)->execute();
-            $this->redirect('/pedidos');
+            $itens = Pedidos_Comida::select()->where('idPedido', $np)->execute();
+            if(count($itens) > 0){
+                Pedidos_Comida::delete()->where('idPedido', $np)->execute();
+            }
         }
+        $this->redirect('/pedidos');
     }
 }
