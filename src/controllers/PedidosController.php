@@ -134,11 +134,24 @@ class PedidosController extends Controller {
         $quantidade = filter_input(INPUT_POST, 'quantidade');
 
         if($produto && $quantidade > 0){
-            Pedidos_Comida::insert([
-                'idPedido' => $numeroPedido,
-                'idComida' => $produto,
-                'quantidade' => $quantidade
-            ])->execute();
+            $verifica = Pedidos_Comida::select()
+                        ->where('idPedido', $numeroPedido)
+                        ->where('idComida', $produto)
+                        ->execute();
+            
+            if(count($verifica) > 0){
+                Pedidos_Comida::update()
+                            ->set('quantidade', $verifica[0]['quantidade'] + $quantidade)
+                            ->where('idPedido', $numeroPedido)
+                            ->where('idComida', $produto)
+                            ->execute();
+            }else{
+                Pedidos_Comida::insert([
+                    'idPedido' => $numeroPedido,
+                    'idComida' => $produto,
+                    'quantidade' => $quantidade
+                ])->execute();
+            }
 
             $produto = Comidas::select()->where('id', $produto)->execute();
             $comida = new ComidasController();
@@ -146,12 +159,18 @@ class PedidosController extends Controller {
             $pedido = Pedidos::select()->where('numeroPedido', $numeroPedido)->execute();
             $pedido = $this->generatePedido($pedido[0]['id'], $pedido[0]['nomeCliente'], $pedido[0]['numeroPedido'], 
                                     $pedido[0]['statusPedido'], $pedido[0]['data'], $pedido[0]['total'], $pedido[0]['user']);
-            
-            $pedido->total += $produto->price * $quantidade;
+                                    
+            $pedido->total += ($produto->price * $quantidade);
             $this->atualizaTotal($pedido);      
         }
 
         $this->redirect('/verPedido/'.$numeroPedido);
+    }
+
+    public function excluirItem($id){
+        $item = new ComidasController();
+        $item = $item->getComida($id);
+        
     }
 
     public function finalizarPedido(){

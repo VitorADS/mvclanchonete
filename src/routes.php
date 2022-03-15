@@ -16,6 +16,7 @@ $router->get('/finalizarPedido', 'PedidosController@finalizarPedido');
 $router->post('/adicionarPedidoAction', 'PedidosController@adicionarPedidoAction');
 $router->get('/verPedido/{np}', 'PedidosController@verPedido');
 $router->get('/excluirPedido/{np}', 'PedidosController@excluirPedido');
+$router->get('/excluirItem/{id}', 'PedidosController@excluirItem');
 
 $router->get('/painelAdm', 'AdminController@painelAdm');
 $router->get('/painelAdm/users', 'AdminController@getUsers');
