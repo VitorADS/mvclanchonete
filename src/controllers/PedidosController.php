@@ -4,6 +4,9 @@ namespace src\controllers;
 use \core\Controller;
 use DateTime;
 use src\models\Pedidos;
+use src\models\Pedidos_Comida;
+use src\models\Comidas;
+use src\controllers\ComidasController as ComidasController;
 use src\controllers\AuthController;
 
 class PedidosController extends Controller {
@@ -38,8 +41,9 @@ class PedidosController extends Controller {
             $array = [];
 
             foreach($pedidos as $pedido){
+                $data = new DateTime($pedido['data']);
                 $pedido = $this->generatePedido($pedido['id'], $pedido['nomeCliente'], $pedido['numeroPedido'], 
-                                                $pedido['statusPedido'], $pedido['data'], $pedido['total'], $pedido['user']);
+                                                $pedido['statusPedido'], $pedido['data'] = $data->format("d-m-Y H:i"), $pedido['total'], $pedido['user']);                         
                 $array[] = $pedido;
             }                                
 
@@ -80,10 +84,12 @@ class PedidosController extends Controller {
         Pedidos::insert([
             'nomeCliente' => $name,
             'numeroPedido' => $numeroPedido,
-            'statusPedido' => 'novo',
+            'statusPedido' => 'Novo',
             'data' => $data,
             'user' => $this->loggedUser->id
         ])->execute();
+
+        $this->redirect('/verPedido/'.$numeroPedido);
     }
 
     public function verPedido($np){
@@ -91,18 +97,73 @@ class PedidosController extends Controller {
                     ->where('numeroPedido', $np)
                     ->execute();
 
-        if(count($pedido) <= 0){
-            $this->redirect('/pedidos');
-            exit;
-        }else{
-            $pedido = $this->generatePedido($pedido[0]['id'], $pedido[0]['nomeCliente'], $pedido[0]['numeroPedido'], 
-                                            $pedido[0]['statusPedido'], $pedido[0]['data'], $pedido[0]['total'], $pedido[0]['user']);
-            
-            $_SESSION['title'] = 'Pedido de '.$pedido->name;
-            $this->render('pedido', [
-                'pedido' => $pedido
-            ]);                              
+        $pedido = $this->generatePedido($pedido[0]['id'], $pedido[0]['nomeCliente'], $pedido[0]['numeroPedido'], 
+                                $pedido[0]['statusPedido'], $pedido[0]['data'], $pedido[0]['total'], $pedido[0]['user']);
+
+        $data = Pedidos_Comida::select()
+                    ->where('idPedido', $pedido->numeroPedido)
+                    ->execute();
+                    
+        $_SESSION['title'] = 'Pedido de '.$pedido->nomeCliente;
+
+        $comidas = Comidas::select()->execute();
+        $comidaC = new ComidasController();
+        $comidas = $comidaC->getAll();
+
+        $array = [];
+        $total = 0;
+
+        if(count($data) > 0){
+            foreach($data as $comida){
+                $comidaC = new ComidasController();
+                $item = $comidaC->getComida($comida['idComida']);
+                $comida = $comidaC->generateComida($item->id, $item->name, $item->price * $comida['quantidade']);
+                $comida->quantidade = $comida->price / $item->price;
+                $total += $comida->price;
+                $comida->total = $total;
+                $array[] = $comida;
+                $this->atualizaTotal($total, $np);
+            }
         }
+
+        $this->render('pedido', [
+            'pedido' => $pedido,
+            'comidas' => $array,
+            'comidasSelect' => $comidas
+        ]);                              
+        
+    }
+
+    public function adicionarItem(){
+        $numeroPedido = filter_input(INPUT_POST, 'numeroPedido');
+        $produto = filter_input(INPUT_POST, 'produto');
+        $quantidade = filter_input(INPUT_POST, 'quantidade');
+
+        Pedidos_Comida::insert([
+            'idPedido' => $numeroPedido,
+            'idComida' => $produto,
+            'quantidade' => $quantidade
+        ])->execute();
+
+        $this->redirect('/verPedido/'.$numeroPedido);
+    }
+
+    public function finalizarPedido(){
+        $np = filter_input(INPUT_GET, 'np');
+
+        Pedidos::update()
+                ->set('statusPedido', 'Enviado')
+                ->where('numeroPedido', $np)
+                ->execute();
+
+        $this->redirect('/pedidos');
+    }
+
+    public function atualizaTotal($total, $np){
+        Pedidos::update()
+                ->set('total', $total)
+                ->where('numeroPedido', $np)
+                ->execute();
     }
 
     public function excluirPedido($np){

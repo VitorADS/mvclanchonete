@@ -22,8 +22,23 @@ class ComidasController extends Controller{
         return $comida;
     }
 
+    public function getComida($id){
+        $comida = Comidas::select()->where('id', $id)->execute();
+        $comida = $this->generateComida($comida[0]['id'], $comida[0]['name'], $comida[0]['price']);
+
+        return $comida;
+    }
+
     public function getComidas(){
         $_SESSION['title'] = 'Painel Administrativo - Comidas';
+        $array[] = $this->getAll();
+
+        $this->render('comidas', [
+            'comidas' => $array
+        ]);
+    }
+
+    public function getAll(){
         $comidas = Comidas::select()->execute();
         $array = [];
 
@@ -32,11 +47,8 @@ class ComidasController extends Controller{
                 $dado = $this->generateComida($comida['id'], $comida['name'], $comida['price']);          
                 $array[] = $dado;
             }
-        }   
-
-        $this->render('comidas', [
-            'comidas' => $array
-        ]);
+        }
+        return $array;
     }
 
     public function adicionarComida(){

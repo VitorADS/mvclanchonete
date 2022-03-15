@@ -10,7 +10,7 @@
             <th>Cliente</th>
             <th>Numero do Pedido</th>
             <th>Status do Pedido</th>
-            <th>Data</th>
+            <th>Criado em</th>
             <th>Total</th>
             <th>Criado Por</th>
             <th>Acoes</th>

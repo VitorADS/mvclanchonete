@@ -11,6 +11,8 @@ $router->post('/register', 'AuthController@registerAction');
 
 $router->get('/pedidos', 'PedidosController@pedidos');
 $router->get('/adicionarPedido', 'PedidosController@adicionarPedido');
+$router->post('/adicionarItem', 'PedidosController@adicionarItem');
+$router->get('/finalizarPedido', 'PedidosController@finalizarPedido');
 $router->post('/adicionarPedidoAction', 'PedidosController@adicionarPedidoAction');
 $router->get('/verPedido/{np}', 'PedidosController@verPedido');
 $router->get('/excluirPedido/{np}', 'PedidosController@excluirPedido');
