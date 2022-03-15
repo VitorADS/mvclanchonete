@@ -1,6 +1,9 @@
 <?php $render('header'); ?>
 
+<h1>Usuarios</h1><hr>
+
 <button><a href="<?=$base;?>/painelAdm">Voltar</a></button>
+<button><a href="<?=$base;?>/painelAdm/adicionarUsuario">Adicionar Usuario</a></button>
 <hr>
 <table border="1px solid">
     <tr>

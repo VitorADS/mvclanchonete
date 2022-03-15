@@ -44,6 +44,30 @@ class AdminController extends Controller{
         ]);
     }
 
+    public function adicionarUsuario(){
+        $_SESSION['title'] = 'Painel Administrativo - Adicionar Usuario';
+        $this->render('adicionarUsuario');
+    }
+
+    public function adicionarUsuarioAction(){
+        $name = filter_input(INPUT_POST, 'name');
+        $admin = filter_input(INPUT_POST, 'admin');
+
+        if(!$admin){
+            $admin = false;
+        }
+        
+        if($name){
+            Users::insert([
+                'name' => $name,
+                'admin' =>$admin,
+                'firstLogin' => true
+            ])->execute();
+        }
+
+        $this->redirect('/painelAdm/users');
+    }
+
     public function editarUser($id){
         $user = Users::select()->where('id', $id)->execute();
 

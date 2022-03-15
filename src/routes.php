@@ -20,6 +20,8 @@ $router->get('/excluirItem/{id}', 'PedidosController@excluirItem');
 
 $router->get('/painelAdm', 'AdminController@painelAdm');
 $router->get('/painelAdm/users', 'AdminController@getUsers');
+$router->get('/painelAdm/adicionarUsuario', 'AdminController@adicionarUsuario');
+$router->post('/painelAdm/adicionarUsuarioAction', 'AdminController@adicionarUsuarioAction');
 $router->get('/painelAdm/editarUser/{id}', 'AdminController@editarUser');
 $router->get('/painelAdm/excluirUser/{id}', 'AdminController@excluirUser');
 
