@@ -8,6 +8,6 @@
             Preco: 
             <input type="number" min="0.00" max="100000.00" step="0.01" name="price">
         </label><br><br>
-        <input type="submit" />
+        <input type="submit" value ="Adicionar"/>
     </form>
 <?php $render('footer'); ?>

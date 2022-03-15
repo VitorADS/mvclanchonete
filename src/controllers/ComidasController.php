@@ -31,10 +31,10 @@ class ComidasController extends Controller{
 
     public function getComidas(){
         $_SESSION['title'] = 'Painel Administrativo - Comidas';
-        $array[] = $this->getAll();
+        $comidas = $this->getAll();
 
         $this->render('comidas', [
-            'comidas' => $array
+            'comidas' => $comidas
         ]);
     }
 

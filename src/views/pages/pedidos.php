@@ -21,10 +21,10 @@
                 <td><?=$pedido->numeroPedido; ?></td>
                 <td><?=$pedido->statusPedido; ?></td>
                 <td><?=$pedido->data; ?></td>
-                <td><?=$pedido->total; ?></td>
+                <td>R$<?=$pedido->total; ?></td>
                 <td><?=$pedido->user; ?></td>
-                <td><a href="<?=$base;?>/verPedido/<?=$pedido->numeroPedido;?>">Ver Pedido</a></td>
-                <td><a href="<?=$base;?>/excluirPedido/<?=$pedido->numeroPedido;?>">Excluir Pedido</a></td>
+                <td><a href="<?=$base;?>/verPedido/<?=$pedido->numeroPedido;?>">Ver Pedido</a> || 
+                <a href="<?=$base;?>/excluirPedido/<?=$pedido->numeroPedido;?>">Excluir Pedido</a></td>
             </tr>
         <?php endforeach; ?>
     </table>

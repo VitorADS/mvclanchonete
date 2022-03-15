@@ -7,6 +7,7 @@ use src\models\Pedidos;
 use src\models\Pedidos_Comida;
 use src\models\Comidas;
 use src\controllers\ComidasController as ComidasController;
+use src\controllers\UsersController as UsersController;
 use src\controllers\AuthController;
 
 class PedidosController extends Controller {
@@ -41,12 +42,14 @@ class PedidosController extends Controller {
             $array = [];
 
             foreach($pedidos as $pedido){
+                $user = new UsersController;
                 $data = new DateTime($pedido['data']);
                 $pedido = $this->generatePedido($pedido['id'], $pedido['nomeCliente'], $pedido['numeroPedido'], 
                                                 $pedido['statusPedido'], $pedido['data'] = $data->format("d-m-Y H:i"), $pedido['total'], $pedido['user']);                         
+                $user = $user->findById($pedido->user);
+                $pedido->user = $user->name;
                 $array[] = $pedido;
             }                                
-
             $this->render('pedidos', [
                 'pedidos' => $array,
                 'user' => $this->loggedUser
