@@ -77,7 +77,7 @@ class AdminController extends Controller{
         $this->redirect('/painelAdm/users');
     }
 
-    /*public function editarUser($id){
+    public function editarUser($id){
         $this->checkUser($id);
         $user = Users::select()->where('id', $id)->execute();
 
@@ -93,7 +93,30 @@ class AdminController extends Controller{
                 'user' => $user
             ]);
         }
-    }*/
+    }
+
+    public function editarUserAction(){
+        $id = filter_input(INPUT_POST, 'id');
+        $name = filter_input(INPUT_POST, 'name');
+        $admin = filter_input(INPUT_POST, 'admin');
+        
+        if(!$admin){
+            $admin = false;
+        }
+
+        if($name){
+            $user = new UsersController();
+            $user = $user->findById($id);
+
+            Users::update()
+                ->set('name', $name)
+                ->set('admin', $admin)
+                ->where('id', $id)
+                ->execute();
+        }
+
+        $this->redirect('/painelAdm/users');
+    }
 
     public function excluirUser($id){
         if(!$this->checkUser($id['id'])){

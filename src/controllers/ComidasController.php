@@ -60,7 +60,7 @@ class ComidasController extends Controller{
         $name = filter_input(INPUT_POST, 'name');
         $price = filter_input(INPUT_POST, 'price');
 
-        if($name && $price){
+        if($name && $price > 0){
             Comidas::insert([
                 'name' => $name,
                 'price' => $price

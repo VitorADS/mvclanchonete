@@ -23,6 +23,7 @@ $router->get('/painelAdm/users', 'AdminController@getUsers');
 $router->get('/painelAdm/adicionarUsuario', 'AdminController@adicionarUsuario');
 $router->post('/painelAdm/adicionarUsuarioAction', 'AdminController@adicionarUsuarioAction');
 $router->get('/painelAdm/editarUser/{id}', 'AdminController@editarUser');
+$router->post('/painelAdm/editarUserAction', 'AdminController@editarUserAction');
 $router->get('/painelAdm/excluirUser/{id}', 'AdminController@excluirUser');
 
 $router->get('/painelAdm/comidas', 'ComidasController@getComidas');

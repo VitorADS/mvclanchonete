@@ -1,4 +1,6 @@
 <?php $render('header'); ?>
+    <h1>Adicionar Comida</h1>
+    <button><a href="<?=$base;?>/painelAdm/comidas">Voltar</a></button><hr>
     <form action="<?=$base;?>/painelAdm/comidaAction" method="POST">
         <label>
             Nome: 
