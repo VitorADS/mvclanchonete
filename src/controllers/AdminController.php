@@ -81,20 +81,21 @@ class AdminController extends Controller{
     }
 
     public function editarUser($id){
-        $this->checkUser($id);
-        $user = Users::select()->where('id', $id)->execute();
+        if(!$this->checkUser($id['id'])){
+            $user = Users::select()->where('id', $id)->execute();
 
-        if(count($user) <= 0){
-            $_SESSION['flash'] = 'usuario inexistente';
-            $this->redirect('/painelAdm/users');
-        }else{
-            $dado = new UsersController();
-            $user = $dado->generateUser($user[0]['id'], $user[0]['name'], $user[0]['password'], $user[0]['token'], $user[0]['firstLogin'], $user[0]['admin']);
-            $_SESSION['title'] = 'Painel Administrativo - Editar '.$user->name;
+            if(count($user) <= 0){
+                $_SESSION['flash'] = 'usuario inexistente';
+                $this->redirect('/painelAdm/users');
+            }else{
+                $dado = new UsersController();
+                $user = $dado->generateUser($user[0]['id'], $user[0]['name'], $user[0]['password'], $user[0]['token'], $user[0]['firstLogin'], $user[0]['admin']);
+                $_SESSION['title'] = 'Painel Administrativo - Editar '.$user->name;
 
-            $this->render('user', [
-                'user' => $user
-            ]);
+                $this->render('user', [
+                    'user' => $user
+                ]);
+            }
         }
     }
 

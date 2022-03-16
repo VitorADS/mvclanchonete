@@ -144,6 +144,13 @@ class PedidosController extends Controller {
         $produto = filter_input(INPUT_POST, 'produto');
         $quantidade = filter_input(INPUT_POST, 'quantidade');
 
+        $pedido = $this->getPedido($numeroPedido);
+        if($pedido->statusPedido == 'Enviado'){
+            $_SESSION['flash'] = 'Nao eh possivel editar este pedido, ja foi enviado para producao';
+            $this->redirect('/pedidos');
+            exit;
+        }
+
         if($produto && $quantidade > 0){
             $verifica = Pedidos_Comida::select()
                         ->where('idPedido', $numeroPedido)
@@ -191,11 +198,10 @@ class PedidosController extends Controller {
     }
 
     public function finalizarPedido(){
-        $np = filter_input(INPUT_GET, 'np');
-
+        $id = filter_input(INPUT_GET, 'id');
         Pedidos::update()
                 ->set('statusPedido', 'Enviado')
-                ->where('numeroPedido', $np)
+                ->where('numeroPedido', $id)
                 ->execute();
 
         $this->redirect('/pedidos');

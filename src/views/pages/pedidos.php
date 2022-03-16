@@ -28,4 +28,5 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <?=$_SESSION['flash'];?>
 <?php $render('footer'); ?>
