@@ -35,6 +35,14 @@ class PedidosController extends Controller {
         return $pedido;
     }
 
+    public function getPedido($np){
+        $pedido = Pedidos::select()->where('numeroPedido', $np)->execute();
+        $pedido = $this->generatePedido($pedido[0]['id'], $pedido[0]['nomeCliente'], $pedido[0]['numeroPedido'], $pedido[0]['statusPedido'],
+                                        $pedido[0]['data'], $pedido[0]['total'], $pedido[0]['user']);
+
+        return $pedido;                                
+    }
+
     public function pedidos(){
         $_SESSION['title'] = 'Pedido';
         $pedidos = Pedidos::select()->execute();
@@ -171,9 +179,15 @@ class PedidosController extends Controller {
     }
 
     public function excluirItem($id){
-        $item = new ComidasController();
-        $item = $item->getComida($id);
-        
+        $item = Pedidos_Comida::select()->where('idComida', $id['id'])->execute();
+        $pedido = $this->getPedido($item[0]['idPedido']);
+        $comida = new ComidasController();
+        $comida = $comida->getComida($item[0]['idComida']);
+        $pedido->total -= ($comida->price * $item[0]['quantidade']);
+        $this->atualizaTotal($pedido);
+
+        Pedidos_Comida::delete()->where('idComida', $id)->execute();
+        $this->redirect('/verPedido/'.$item[0]['idPedido']);
     }
 
     public function finalizarPedido(){
