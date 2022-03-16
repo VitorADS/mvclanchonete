@@ -188,6 +188,11 @@ class PedidosController extends Controller {
     public function excluirItem($id){
         $item = Pedidos_Comida::select()->where('idComida', $id['id'])->execute();
         $pedido = $this->getPedido($item[0]['idPedido']);
+        if($pedido->statusPedido == 'Enviado'){
+            $_SESSION['flash'] = 'Nao eh possivel editar este pedido, ja foi enviado para producao';
+            $this->redirect('/pedidos');
+            exit;
+        }
         $comida = new ComidasController();
         $comida = $comida->getComida($item[0]['idComida']);
         $pedido->total -= ($comida->price * $item[0]['quantidade']);
