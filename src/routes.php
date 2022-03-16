@@ -8,6 +8,8 @@ $router->get('/', 'HomeController@index');
 $router->post('/login', 'AuthController@loginAction');
 $router->get('/logout', 'AuthController@logout');
 $router->post('/register', 'AuthController@registerAction');
+$router->get('/firstLogin', 'AuthController@firstLogin');
+$router->post('/firstLoginAction', 'AuthController@firstLoginAction');
 
 $router->get('/pedidos', 'PedidosController@pedidos');
 $router->get('/adicionarPedido', 'PedidosController@adicionarPedido');

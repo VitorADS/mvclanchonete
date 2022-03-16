@@ -25,6 +25,7 @@ class UsersController extends Controller{
             ->set('token', $user->token)
             ->set('firstLogin', $user->firstLogin)
             ->set('admin', $user->admin)
+            ->where('id', $user->id)
             ->execute();
     }
 

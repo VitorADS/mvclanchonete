@@ -61,6 +61,7 @@ class AdminController extends Controller{
     public function adicionarUsuarioAction(){
         $name = filter_input(INPUT_POST, 'name');
         $admin = filter_input(INPUT_POST, 'admin');
+        $rand = rand(0, 9999);
 
         if(!$admin){
             $admin = false;
@@ -69,9 +70,11 @@ class AdminController extends Controller{
         if($name){
             Users::insert([
                 'name' => $name,
-                'admin' =>$admin,
+                'admin' => $admin,
+                'password' => $rand,
                 'firstLogin' => true
             ])->execute();
+            $_SESSION['flash'] = 'Senha temporaria: '.$rand;
         }
 
         $this->redirect('/painelAdm/users');

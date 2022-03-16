@@ -7,12 +7,6 @@ use src\controllers\AdminController as Admin;
 
 class ComidasController extends Controller{
 
-    public function __construct(){
-        if(!Admin::isAdm()){
-            $this->redirect('/pedidos');
-        }
-    }
-
     public function generateComida($id, $name, $price){
         $comida = new Comidas();
         $comida->id = $id;
@@ -30,6 +24,10 @@ class ComidasController extends Controller{
     }
 
     public function getComidas(){
+        if(!Admin::isAdm()){
+            $this->redirect('/pedidos');
+            exit;
+        }
         $_SESSION['title'] = 'Painel Administrativo - Comidas';
         $comidas = $this->getAll();
 
@@ -52,11 +50,19 @@ class ComidasController extends Controller{
     }
 
     public function adicionarComida(){
+        if(!Admin::isAdm()){
+            $this->redirect('/pedidos');
+            exit;
+        }
         $_SESSION['title'] = 'Painel Administrativo - Adicionar Comidas';
         $this->render('adicionarComida');
     }
 
     public function adicionarComidaAction(){
+        if(!Admin::isAdm()){
+            $this->redirect('/pedidos');
+            exit;
+        }
         $name = filter_input(INPUT_POST, 'name');
         $price = filter_input(INPUT_POST, 'price');
 
@@ -70,6 +76,10 @@ class ComidasController extends Controller{
     }
 
     public function editarComida($id){
+        if(!Admin::isAdm()){
+            $this->redirect('/pedidos');
+            exit;
+        }
         $_SESSION['title'] = 'Painel Administrativo - Editar Comida';
         $comida = Comidas::select()->where('id', $id)->execute();
 
@@ -82,6 +92,10 @@ class ComidasController extends Controller{
     }
 
     public function editarComidaAction(){
+        if(!Admin::isAdm()){
+            $this->redirect('/pedidos');
+            exit;
+        }
         $id = filter_input(INPUT_POST, 'id');
         $name = filter_input(INPUT_POST, 'name');
         $price = filter_input(INPUT_POST, 'price');
@@ -97,6 +111,10 @@ class ComidasController extends Controller{
     }
 
     public function excluirComida($id){
+        if(!Admin::isAdm()){
+            $this->redirect('/pedidos');
+            exit;
+        }
         Comidas::delete()->where('id', $id)->execute();
         $this->redirect('/painelAdm/comidas');
     }

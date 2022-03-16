@@ -26,6 +26,10 @@ class AuthController extends Controller {
         
         $auth = new UsersController();
         if($user = $auth->findById($user)){
+            if($user->firstLogin == true){
+                $_SESSION['id'] = $user->id;
+                $this->redirect('/firstLogin');
+            }
             if(password_verify($password, $user->password)){
                 $user->token = md5(time().rand(0, 9999));
                 $auth->update($user);
@@ -34,6 +38,47 @@ class AuthController extends Controller {
             }
         }
         $_SESSION['flash'] = 'Usuario e/ou senha incorretos!';
+        $this->redirect('/');
+    }
+
+    public function firstLogin(){
+        $user = new UsersController();
+        if($user = $user->findById($_SESSION['id'])){
+            if($user->firstLogin == true){
+                $this->render('firstLogin', [
+                    'user' => $user
+                ]);
+            }
+        }else{
+            $this->redirect('/');
+        }
+    }
+
+    public function firstLoginAction(){
+        $id = filter_input(INPUT_POST, 'id');
+        $password = filter_input(INPUT_POST, 'password');
+        $password2 = filter_input(INPUT_POST, 'password2');
+
+        if($password && $password2){
+            if($password == $password2){
+                $password = password_hash($password, PASSWORD_DEFAULT);
+                $_SESSION['token'] = md5(time().rand(0, 99999));
+
+                Users::update()
+                    ->set('firstLogin', false)
+                    ->set('password', $password)
+                    ->set('token', $_SESSION['token'])
+                    ->where('id', $id)
+                    ->execute();
+                
+                $this->redirect('/pedidos');
+                exit;
+            }else{
+                $_SESSION['flash'] = 'Senhas nao coincidem';
+            }
+        }else{
+            $_SESSION['flash'] = 'Senha nao preenchida';
+        }
         $this->redirect('/');
     }
 
