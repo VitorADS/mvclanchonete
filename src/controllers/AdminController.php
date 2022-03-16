@@ -13,6 +13,15 @@ class AdminController extends Controller{
         }
     }
 
+    public function checkUser($id){
+        if($id == 1){
+            $_SESSION['flash'] = 'Nao eh possivel excluir ou editar este usuario';
+            $this->redirect('/painelAdm/users');
+        }else{
+            return false;
+        }
+    }
+
     public function painelAdm(){
         $_SESSION['title'] = 'Painel Administrativo';
         $this->render('painelAdm');
@@ -68,7 +77,8 @@ class AdminController extends Controller{
         $this->redirect('/painelAdm/users');
     }
 
-    public function editarUser($id){
+    /*public function editarUser($id){
+        $this->checkUser($id);
         $user = Users::select()->where('id', $id)->execute();
 
         if(count($user) <= 0){
@@ -83,17 +93,19 @@ class AdminController extends Controller{
                 'user' => $user
             ]);
         }
-    }
+    }*/
 
     public function excluirUser($id){
-        $user = Users::select()->where('id', $id)->execute();
+        if(!$this->checkUser($id['id'])){
+            $user = Users::select()->where('id', $id)->execute();
 
-        if(count($user) <= 0){
-            $_SESSION['flash'] = 'usuario inexistente';
-            $this->redirect('/painelAdm/users');
-        }else{
-            Users::delete()->where('id', $id)->execute();
-            $this->redirect('/painelAdm/users');
+            if(count($user) <= 0){
+                $_SESSION['flash'] = 'usuario inexistente';
+                $this->redirect('/painelAdm/users');
+            }else{
+                Users::delete()->where('id', $id)->execute();
+                $this->redirect('/painelAdm/users');
+            }
         }
     }
 
