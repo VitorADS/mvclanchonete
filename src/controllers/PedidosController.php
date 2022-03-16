@@ -44,7 +44,7 @@ class PedidosController extends Controller {
     }
 
     public function pedidos(){
-        $_SESSION['title'] = 'Pedido';
+        $_SESSION['title'] = 'Pedidos';
         $pedidos = Pedidos::select()->execute();
         if(count($pedidos) > 0){
             $array = [];
