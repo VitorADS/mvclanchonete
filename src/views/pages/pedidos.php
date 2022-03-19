@@ -1,10 +1,10 @@
 <?php $render('header'); ?>
-    <button><a href="<?=$base;?>/logout">Sair</a></button><br>
+    <button id="botaoV"><a href="<?=$base;?>/logout">Sair</a></button><br>
     <h3>Usuario logado: <?=$user->name;?></h3>
     <hr>
-        <button><a href="<?=$base;?>/painelAdm">Painel Administrativo</a></button>
+        <button id="botaoV"><a href="<?=$base;?>/painelAdm">Painel Administrativo</a></button>
     <hr>
-    <button><a href="<?=$base;?>/adicionarPedido">Adicionar Pedido</a></button><br><br>
+    <button id="botaoV"><a href="<?=$base;?>/adicionarPedido">Adicionar Pedido</a></button><br><br>
     <table>
         <thead>
             <tr>
