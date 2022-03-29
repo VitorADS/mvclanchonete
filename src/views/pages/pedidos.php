@@ -2,8 +2,10 @@
     <button id="botaoV"><a href="<?=$base;?>/logout">Sair</a></button><br>
     <h3>Usuario logado: <?=$user->name;?></h3>
     <hr>
+        <?php if($user->admin): ?>
         <button id="botaoV"><a href="<?=$base;?>/painelAdm">Painel Administrativo</a></button>
     <hr>
+        <?php endif; ?>
     <button id="botaoV"><a href="<?=$base;?>/adicionarPedido">Adicionar Pedido</a></button><br><br>
     <table>
         <thead>

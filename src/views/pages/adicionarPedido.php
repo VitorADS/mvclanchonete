@@ -3,7 +3,7 @@
     <button id="botaoV"><a href="<?=$base;?>/pedidos">Voltar</a></button><hr>
     <form action="<?=$base;?>/adicionarPedidoAction" method="POST">
         <label>
-            <input type="text" name="name" placeholder="Nome do Cliente" />
+            <input type="text" name="name" placeholder="Nome do Cliente"  id="name"/>
         </label><br><br>
         <input type="submit" id="botaoU" value="Adicionar" />
     </form>
