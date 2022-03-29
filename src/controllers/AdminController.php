@@ -64,7 +64,7 @@ class AdminController extends Controller{
         $rand = rand(0, 9999);
 
         if(!$admin){
-            $admin = false;
+            $admin = 0;
         }
         
         if($name){
@@ -72,7 +72,7 @@ class AdminController extends Controller{
                 'name' => $name,
                 'admin' => $admin,
                 'password' => $rand,
-                'firstLogin' => true
+                'firstLogin' => 1
             ])->execute();
             $_SESSION['flash'] = 'Senha temporaria: '.$rand;
         }
@@ -105,7 +105,9 @@ class AdminController extends Controller{
         $admin = filter_input(INPUT_POST, 'admin');
         
         if(!$admin){
-            $admin = false;
+            $admin = 0;
+        }else{
+            $admin = 1;
         }
 
         if($name){

@@ -65,7 +65,7 @@ class AuthController extends Controller {
                 $_SESSION['token'] = md5(time().rand(0, 99999));
 
                 Users::update()
-                    ->set('firstLogin', false)
+                    ->set('firstLogin', 0)
                     ->set('password', $password)
                     ->set('token', $_SESSION['token'])
                     ->where('id', $id)
