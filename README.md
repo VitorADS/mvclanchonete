@@ -16,9 +16,8 @@ As configurações de Banco de Dados e URL estão no arquivo *src/Config.php*
 É importante configurar corretamente a constante *BASE_DIR*:
 > const BASE_DIR = '/**PastaDoProjeto**/public';
 
-Importar o banco de dados lanchonete_mvc.sql
-Login do administrador: 1
-Senha: vitor
-
 ## Uso
 Você deve acessar a pasta *public* do projeto na url do navegador.
+Importar o banco de dados lanchonete_mvc.sql.
+Login do administrador: 1.
+Senha: vitor.
