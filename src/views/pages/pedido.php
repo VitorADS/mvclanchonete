@@ -30,7 +30,7 @@
                 <td><?=$comida->name;?></td>
                 <td><?=$comida->quantidade;?></td>
                 <td>R$ <?=$comida->price;?></td>
-                <td><a href="<?=$base;?>/excluirItem/<?=$comida->id;?>">Excluir</a></td>
+                <td><a href="<?=$base;?>/excluirItem/<?=$comida->id;?>/<?=$comida->np;?>">Excluir</a></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

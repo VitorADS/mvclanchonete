@@ -127,6 +127,7 @@ class PedidosController extends Controller {
                 $item = $comidaC->getComida($comida['idComida']);
                 $item->quantidade = $comida['quantidade'];
                 $item->price = $item->quantidade * $item->price;
+                $item->np = $np['np'];
                 $array[] = $item;
             }
         }
@@ -186,20 +187,28 @@ class PedidosController extends Controller {
     }
 
     public function excluirItem($id){
-        $item = Pedidos_Comida::select()->where('idComida', $id['id'])->execute();
-        $pedido = $this->getPedido($item[0]['idPedido']);
+        $item = Pedidos_Comida::select()
+                ->where('idComida', $id['id'])
+                ->where('idPedido', $id['np'])
+                ->execute();
+
+        $pedido = $this->getPedido($id['np']);
         if($pedido->statusPedido == 'Enviado'){
             $_SESSION['flash'] = 'Nao eh possivel editar este pedido, ja foi enviado para producao';
             $this->redirect('/pedidos');
             exit;
         }
+        
         $comida = new ComidasController();
         $comida = $comida->getComida($item[0]['idComida']);
         $pedido->total -= ($comida->price * $item[0]['quantidade']);
         $this->atualizaTotal($pedido);
 
-        Pedidos_Comida::delete()->where('idComida', $id)->execute();
-        $this->redirect('/verPedido/'.$item[0]['idPedido']);
+        Pedidos_Comida::delete()->where('idComida', $id['id'])
+                                ->where('idPedido', $pedido->numeroPedido)
+                                ->execute();
+
+        $this->redirect('/verPedido/'.$pedido->numeroPedido);
     }
 
     public function finalizarPedido(){
