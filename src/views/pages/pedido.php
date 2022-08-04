@@ -1,19 +1,19 @@
 <?php $render('header'); ?>
 
 <h1>Pedido de <?=$pedido->nomeCliente;?></h1>
-<button><a href="<?=$base;?>/pedidos">Voltar</a></button><hr/>
+<button id="botaoP"><a href="<?=$base;?>/pedidos">Voltar</a></button><hr/>
 
 <form action="<?=$base;?>/adicionarItem" method="POST">
-    <select name="produto">
+    <select id="botaoP" name="produto">
         <?php foreach($comidasSelect as $select): ?>
             <option value="<?=$select->id;?>"><?=$select->name;?> || R$<?=$select->price;?></option>
         <?php endforeach; ?>
     </select>
-    <input type="number" name="quantidade" placeholder="Quantidade" id="quantidadePedido" />
+    <input id="botaoP" type="number" name="quantidade" placeholder="Quantidade" id="quantidadePedido" />
     <input type="hidden" name="numeroPedido" value="<?=$pedido->numeroPedido;?>" />
-    <input onclick="verificaQuantidade()" type="submit" value="Adicionar" />
+    <input id="botaoP" onclick="verificaQuantidade()" type="submit" value="Adicionar" />
 </form><br>
-<button><a href="<?=$base;?>/finalizarPedido?id=<?=$pedido->numeroPedido;?>">Finalizar Pedido</a></button><hr>
+<button id="botaoP"><a href="<?=$base;?>/finalizarPedido?id=<?=$pedido->numeroPedido;?>">Finalizar Pedido</a></button><hr>
 
 <table>
     <thead>
