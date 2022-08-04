@@ -28,8 +28,8 @@
                     <td><?=$pedido->data; ?></td>
                     <td>R$<?=$pedido->total; ?></td>
                     <td><?=$pedido->user; ?></td>
-                    <td><a href="<?=$base;?>/verPedido/<?=$pedido->numeroPedido;?>">Ver Pedido</a> || 
-                    <a href="<?=$base;?>/excluirPedido/<?=$pedido->numeroPedido;?>">Excluir Pedido</a></td>
+                    <td><button id="botaoP"><a href="<?=$base;?>/verPedido/<?=$pedido->numeroPedido;?>">Ver Pedido</a></button>    
+                    <button id="botaoP"><a href="<?=$base;?>/excluirPedido/<?=$pedido->numeroPedido;?>">Excluir Pedido</a></button></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

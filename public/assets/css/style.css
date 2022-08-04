@@ -27,7 +27,7 @@ body{
 }
 
 table{
-    font-size: 15px;
+    font-size: 16px;
     margin: auto;
     margin-top: 50px;
     width: 1500px;
@@ -36,7 +36,7 @@ table{
 
 thead{
     background-color: #DDD;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 th{
@@ -64,13 +64,19 @@ tr:hover{
 
 #botaoU, #botaoV{
     padding: 10px;
-    font-size: 15px;
+    font-size: 17px;
+    letter-spacing: 0.5px;
     margin-top: 20px;
     cursor: pointer;
 }
 
 #botaoU{
     margin-left: 200px;
+}
+
+#botaoP{
+    padding: 6px;
+    font-size: 13px;
 }
 
 a{

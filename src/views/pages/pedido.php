@@ -30,7 +30,7 @@
                 <td><?=$comida->name;?></td>
                 <td><?=$comida->quantidade;?></td>
                 <td>R$ <?=$comida->price;?></td>
-                <td><a href="<?=$base;?>/excluirItem/<?=$comida->id;?>/<?=$comida->np;?>">Excluir</a></td>
+                <td><button id="botaoP"><a href="<?=$base;?>/excluirItem/<?=$comida->id;?>/<?=$comida->np;?>">Excluir</a></button></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
