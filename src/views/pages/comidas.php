@@ -17,8 +17,8 @@
             <tr>
                 <td><?=$comida->name;?></td>
                 <td>R$<?=$comida->price;?></td>
-                <td><a href="<?=$base;?>/painelAdm/editarComida/<?=$comida->id;?>">Editar</a> || 
-                <a href="<?=$base;?>/painelAdm/excluirComida/<?=$comida->id;?>">Excluir</a></td>
+                <td><button id="botaoP"><a href="<?=$base;?>/painelAdm/editarComida/<?=$comida->id;?>">Editar</a></button>    
+                <button id="botaoP"><a href="<?=$base;?>/painelAdm/excluirComida/<?=$comida->id;?>">Excluir</a></button></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

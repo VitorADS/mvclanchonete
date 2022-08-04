@@ -20,8 +20,8 @@
                 <td><?=$user->id;?></td>
                 <td><?=$user->name;?></td>
                 <td><?php if($user->admin){echo 'Sim';}else{echo 'Nao';}?></td>
-                <td><a href="<?=$base;?>/painelAdm/editarUser/<?=$user->id;?>">Editar</a> || 
-                <a href="<?=$base;?>/painelAdm/excluirUser/<?=$user->id;?>">Excluir</a></td>
+                <td><button id="botaoP"><a href="<?=$base;?>/painelAdm/editarUser/<?=$user->id;?>">Editar</a></button>    
+                <button id="botaoP"><a href="<?=$base;?>/painelAdm/excluirUser/<?=$user->id;?>">Excluir</a></button></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
