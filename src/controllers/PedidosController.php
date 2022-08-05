@@ -46,27 +46,21 @@ class PedidosController extends Controller {
     public function pedidos(){
         $_SESSION['title'] = 'Pedidos';
         $pedidos = Pedidos::select()->execute();
-        if(count($pedidos) > 0){
-            $array = [];
+        $array = [];
 
-            foreach($pedidos as $pedido){
-                $user = new UsersController;
-                $data = new DateTime($pedido['data']);
-                $pedido = $this->generatePedido($pedido['id'], $pedido['nomeCliente'], $pedido['numeroPedido'], 
-                                                $pedido['statusPedido'], $pedido['data'] = $data->format("d-m-Y H:i"), $pedido['total'], $pedido['user']);                         
-                $user = $user->findById($pedido->user);
-                $pedido->user = $user->name;
-                $array[] = $pedido;
-            }                                
-            $this->render('pedidos', [
-                'pedidos' => $array,
-                'user' => $this->loggedUser
-            ]);
-        }else{
-            $this->render('pedidos', [
-                'user' => $this->loggedUser
-            ]);
-        }
+        foreach($pedidos as $pedido){
+            $user = new UsersController;
+            $data = new DateTime($pedido['data']);
+            $pedido = $this->generatePedido($pedido['id'], $pedido['nomeCliente'], $pedido['numeroPedido'], 
+                                            $pedido['statusPedido'], $pedido['data'] = $data->format("d-m-Y H:i"), $pedido['total'], $pedido['user']);                         
+            $user = $user->findById($pedido->user);
+            $pedido->user = $user->name;
+            $array[] = $pedido;
+        }                                
+        $this->render('pedidos', [
+            'pedidos' => $array,
+            'user' => $this->loggedUser
+        ]);
     }
 
     public function adicionarPedido(){
