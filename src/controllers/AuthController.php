@@ -26,7 +26,7 @@ class AuthController extends Controller {
         
         $auth = new UsersController();
         if($user = $auth->findById($user)){
-            if($user->firstLogin == true){
+            if($user->firstLogin == true && password_verify($password, $user->password)){
                 $_SESSION['id'] = $user->id;
                 $this->redirect('/firstLogin');
             }

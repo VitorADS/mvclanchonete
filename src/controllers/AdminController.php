@@ -71,7 +71,7 @@ class AdminController extends Controller{
             Users::insert([
                 'name' => $name,
                 'admin' => $admin,
-                'password' => $rand,
+                'password' => password_hash($rand, PASSWORD_DEFAULT),
                 'firstLogin' => 1
             ])->execute();
             $_SESSION['flash'] = 'Senha temporaria: '.$rand;
