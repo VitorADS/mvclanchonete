@@ -31,7 +31,7 @@ CREATE TABLE `comidas` (
   `id` int NOT NULL,
   `name` varchar(50) NOT NULL,
   `price` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `comidas`
@@ -57,7 +57,7 @@ CREATE TABLE `pedidos` (
   `data` datetime NOT NULL,
   `total` float DEFAULT NULL,
   `user` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `pedidos`
@@ -79,7 +79,7 @@ CREATE TABLE `pedidos_comida` (
   `idPedido` int NOT NULL,
   `idComida` int NOT NULL,
   `quantidade` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `pedidos_comida`
@@ -101,10 +101,10 @@ CREATE TABLE `users` (
   `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `password` varchar(350) NOT NULL,
-  `token` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `token` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `firstLogin` tinyint(1) NOT NULL,
   `admin` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `users`
