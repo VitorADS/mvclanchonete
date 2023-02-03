@@ -19,7 +19,7 @@ As configurações de Banco de Dados e URL estão no arquivo *src/Config.php*
 ## Uso
 Você deve acessar a pasta *public* do projeto na url do navegador.
 
-Importar o banco de dados lanchonete_mvc.sql
+Criar e importar o banco de dados lanchonete_mvc.sql
 
 Login do administrador: 1
 
